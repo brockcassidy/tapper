@@ -10,16 +10,66 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    //Variables
+    var maxTaps: Int = 5
+    var currentTaps: Int = 0
+    
+    //Outlets
+    @IBOutlet weak var logImg: UIImageView!
+    @IBOutlet weak var howManyTapsTxt: UITextField!
+    @IBOutlet weak var pushBtn: UIButton!
+    
+    @IBOutlet weak var tapBtn: UIButton!
+    @IBOutlet weak var tapsLbl: UILabel!
+    
+    //Actions
+    @IBAction func onCoinTapped(sender: UIButton) {
+        currentTaps = currentTaps + 1
+        updateTapsLbl()
+        if isGameOver() {
+            restartGame()
+        }
     }
+    
+    @IBAction func onPlayBtnPressed(sender: UIButton) {
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+        if howManyTapsTxt.text != nil && howManyTapsTxt.text != "" {
+            
+            logImg.hidden = true
+            pushBtn.hidden = true
+            howManyTapsTxt.hidden = true
+            tapBtn.hidden = false
+            tapsLbl.hidden = false
+            
+            maxTaps = Int(howManyTapsTxt.text!)!
+            currentTaps = 0
+            
+            updateTapsLbl()
+
+        }
     }
-
-
+    
+    func updateTapsLbl() {
+        tapsLbl.text = "\(currentTaps) Taps"
+    }
+    
+    func restartGame() {
+        maxTaps = 0
+        currentTaps = 0
+        howManyTapsTxt.text = ""
+        logImg.hidden = false
+        pushBtn.hidden = false
+        howManyTapsTxt.hidden = false
+        
+        tapBtn.hidden = true
+        tapsLbl.hidden = true
+    }
+    
+    func isGameOver() -> Bool {
+        if currentTaps >= maxTaps {
+            return true
+        } else {
+            return false
+        }}
 }
-
